@@ -1,15 +1,14 @@
-# ------------ STAGE 1: Build ------------
-FROM maven:3.8.5-openjdk-17 AS build
+# ------------ STAGE 1: Build with Java 21 ------------
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# ------------ STAGE 2: Run ------------
-FROM eclipse-temurin:17-alpine
+# ------------ STAGE 2: Runtime (Java 21) ------------
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
-# Set environment port (Render uses PORT env variable)
 ENV PORT=10000
 EXPOSE 10000
 
