@@ -32,10 +32,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String path = request.getRequestURI();
 
-        // ✅ Skip token validation for public endpoints
+        // ✅ Skip token validation for public endpoints (GET/POST/PUT for /api/courses)
         if (path.startsWith("/register") ||
                 path.startsWith("/login") ||
-                path.startsWith("/api/courses") ||
+                path.startsWith("/api/courses") ||  // Skips all methods (GET, POST, etc.)
                 path.startsWith("/api/enrollments") ||
                 path.startsWith("/api/users/email")) {
 
